@@ -111,7 +111,10 @@ def barplot (x_value, y_value, data_value, palette_value , hue_value, legend_tit
     plt.title(title_value)
     plt.xlabel(x_label)
     plt.ylabel(y_label)
-    plt.legend(title= legend_title);
+    if legend_title is not None:
+        plt.legend(title= legend_title)
+    else:
+        plt.legend().remove();
     
     
 def scatter (x_value, y_value, dots_color, dots_size, x_label, y_label, title_value, dots_transparency = 0.7, size = (10 , 6)):
@@ -132,7 +135,7 @@ def countplot (x_value, data_value, palette_value , hue_value, legend_title, x_l
 
     plt.figure(figsize= size)
     
-    sns.countplot(x_value, 
+    sns.countplot(x = x_value, 
                   data = data_value, 
                   palette = palette_value,
                   hue = hue_value,
@@ -143,3 +146,22 @@ def countplot (x_value, data_value, palette_value , hue_value, legend_title, x_l
     plt.xticks(rotation = x_label_rotation)  
     plt.ylabel(y_label);
 
+
+
+def pie (x_value, labels_value, labels_size, labels_color, data_value, palette_value, title_value, title_color, title_size, sep_number = 0.1, size = (8 , 8)):
+    
+    proporcion = list(labels_value)
+    separacion = [sep_number] * len(proporcion) 
+    
+    plt.figure(figsize= size)
+
+    plt.pie(x_value, 
+            labels = labels_value,
+            autopct =  '%1.1f%%', 
+            colors = sns.color_palette(palette_value, len(proporcion)), 
+            textprops = {'fontsize': labels_size, 'color' : labels_color}, 
+            explode = separacion);
+    
+    plt.title(title_value, color = title_color, fontsize = title_size)
+    plt.legend(bbox_to_anchor=(1.2, 1))
+    

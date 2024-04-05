@@ -67,14 +67,34 @@ fun.exploration(df)
 #%%
 flights_by_month_year = df.groupby(['year', 'month'])['total_flights'].sum().reset_index()
 
-vis.barplot('month' , 'total_flights' , flights_by_month_year, 'Set3', 'year' , 'year' , 'Month' , 'Total flights booked' , 'Distribution of Total Flights per Month', (14,6))
+vis.barplot('month', 'total_flights', flights_by_month_year, 'Set3', 'year', 'year', 'Month', 'Total flights booked', 'Distribution of Total Flights per Month', (14,6))
 
 #Observaciones: Existe una mayor concentración de vuelos reservados en los meses de verano (junio, julio y agosto) para ambos años, así como un leve despunte en el mes de diciembre
 
 # -------------------------------------------------- Relación entre la distancia del vuelo y los puntos acumulados por el cliente
 #%%
-vis.scatter(df['distance'] , df['points_accumulated'] , 'orchid' , 20, 'Flight Distance', 'Accumulated Points', 'Relationship between Flight Distance and Accumulated Points', 0.8, (10,6))
+vis.scatter(df['distance'], df['points_accumulated'], 'orchid', 20, 'Flight Distance', 'Accumulated Points', 'Relationship between Flight Distance and Accumulated Points', 0.8, (10,6))
 
 #Observaciones: Existe una clara relación entre la distancia recorrida en el vuelo y el número de puntos acumulados. Esta relación, además, parece ser de tendencia positiva, pues cuando una de ambas variables aumenta, la otra también
 
 # -------------------------------------------------- Distribución de los clientes por provincia o estado
+#%%
+vis.countplot('province', df, 'Purples', False, False, 'Province', 'Total Clients', 'Distribution of Total Clients per Province', 45, (8,6))
+
+#Observaciones: No existe una representación uniforme de las provincias, sino que se aprecia que la gran mayoría de clientes pertenece a Ontario, seguidos por British Columnia. Por contra, Prince Edward Island tiene la menor representación
+
+# -------------------------------------------------- Comparación del salario promedio entre los diferentes niveles educativos de los clientes
+#%%
+vis.barplot('education', 'salary', df, 'BuPu_r', False, None, 'Education Level', 'Average Salary', 'Comparison of Average Salary by Education Level', (10,6))
+
+#Observaciones: Hay que tener en cuenta que los datos de College se imputaron para que pudiera tener representación en la gráfica, ya que para esta categoría no existía ningún registro de valores
+                # Sin embargo, estos datos deberán cogerse con pinzas ya que no servirían para establecer conclusiones firmes. Se necesitaría recibir los datos reales para ello
+                # Teniendo esto en cuenta, se aprecia que cuanto mayor es el nivel educativo, mayor promedio salarial
+                # Especial mención al grado de doctorado, cuyo promedio es muy superior al resto
+
+# -------------------------------------------------- Proporción de clientes con diferentes tipos de tarjetas de fidelidad
+#%%
+vis.pie(df['loyalty_card'].value_counts(), df['loyalty_card'].unique(), 15, 'white', None, 'BuPu_r', 'Prueba', 'white', 20, 0.1, (7,7))
+
+
+# %%

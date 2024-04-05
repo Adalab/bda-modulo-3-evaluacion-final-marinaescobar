@@ -171,7 +171,8 @@ def data_cleaning (df):
     duplicates = df.duplicated().sum()
     if duplicates > 0:
         df.drop_duplicates(inplace = True)
-        
+    
+    # Crea un diccionario con los meses y su nuevo nombre   
     months_name = {1 : '01-Jan',
                    2 : '02-Feb',
                    3 : '03-Mar',
