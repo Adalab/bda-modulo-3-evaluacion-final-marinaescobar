@@ -16,7 +16,7 @@ El archivo main.py contiene el código principal que realiza el análisis de los
 
 - **Fase 2: Visualización**: Se realizan visualizaciones para comprender mejor los datos y extraer insights importantes. Se utilizan gráficos de barras, gráficos de dispersión y gráficos de pastel, entre otros.
 
-- **Fase 3: Evaluación**: Se realiza un análisis estadístico para evaluar hipótesis específicas sobre los datos. En este caso, se utiliza un test ANOVA para determinar si existe una diferencia significativa en el número de vuelos reservados entre diferentes niveles educativos.
+- **Fase 3: Evaluación**: Se realiza un análisis estadístico para evaluar hipótesis específicas sobre los datos. En este caso, se utiliza un test Kruskal-Wallis para determinar si existe una diferencia significativa en el número de vuelos reservados entre diferentes niveles educativos.
 
 ## Tecnologías empleadas
 ![Python](https://img.shields.io/badge/Python-%233776AB?style=flat&logo=python&logoColor=white)
