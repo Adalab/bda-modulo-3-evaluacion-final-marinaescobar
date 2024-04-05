@@ -67,13 +67,13 @@ fun.exploration(df)
 #%%
 flights_by_month_year = df.groupby(['year', 'month'])['total_flights'].sum().reset_index()
 
-vis.barplot('month', 'total_flights', flights_by_month_year, 'Set3', 'year', 'year', 'Month', 'Total flights booked', 'Distribution of Total Flights per Month', (14,6))
+vis.barplot('month', 'total_flights', flights_by_month_year, 'Set3', 'year', 'Year', 'Month', 'Total flights booked', 'Distribution of Total Flights per Month', (14,6))
 
 #Observaciones: Existe una mayor concentración de vuelos reservados en los meses de verano (junio, julio y agosto) para ambos años, así como un leve despunte en el mes de diciembre
 
 # -------------------------------------------------- Relación entre la distancia del vuelo y los puntos acumulados por el cliente
 #%%
-vis.scatter(df['distance'], df['points_accumulated'], 'orchid', 20, 'Flight Distance', 'Accumulated Points', 'Relationship between Flight Distance and Accumulated Points', 0.8, (10,6))
+vis.scatter(df['distance'], df['points_accumulated'], 'orchid', 20, 'Flight Distance', 'Accumulated Points', 'Relationship between Flight Distance and Accumulated Points', 0.8, (8,6))
 
 #Observaciones: Existe una clara relación entre la distancia recorrida en el vuelo y el número de puntos acumulados. Esta relación, además, parece ser de tendencia positiva, pues cuando una de ambas variables aumenta, la otra también
 
@@ -85,7 +85,7 @@ vis.countplot('province', df, 'Purples', False, False, 'Province', 'Total Client
 
 # -------------------------------------------------- Comparación del salario promedio entre los diferentes niveles educativos de los clientes
 #%%
-vis.barplot('education', 'salary', df, 'BuPu_r', False, None, 'Education Level', 'Average Salary', 'Comparison of Average Salary by Education Level', (10,6))
+vis.barplot('education', 'salary', df, 'BuPu_r', False, None, 'Education Level', 'Average Salary', 'Comparison of Average Salary by Education Level', (8,6))
 
 #Observaciones: Hay que tener en cuenta que los datos de College se imputaron para que pudiera tener representación en la gráfica, ya que para esta categoría no existía ningún registro de valores
                 # Sin embargo, estos datos deberán cogerse con pinzas ya que no servirían para establecer conclusiones firmes. Se necesitaría recibir los datos reales para ello
@@ -94,7 +94,13 @@ vis.barplot('education', 'salary', df, 'BuPu_r', False, None, 'Education Level',
 
 # -------------------------------------------------- Proporción de clientes con diferentes tipos de tarjetas de fidelidad
 #%%
-vis.pie(df['loyalty_card'].value_counts(), df['loyalty_card'].unique(), 15, 'white', None, 'BuPu_r', 'Prueba', 'white', 20, 0.1, (7,7))
+vis.pie(df['loyalty_card'].value_counts(), df['loyalty_card'].unique(), 15, 'white', None, 'BuPu_r', 'Percentage of clients for each Loyalty Card', 'black', 14, 0.1, (6,6))
 
+#Observaciones: La mayoría de clientes se mueven entre las tarjetas de fidelidad nova y star (con un 45,5% y 33,9% respectivamente), siendo aurora la que menor representación tiene (20,6%)
+
+# %%
+vis.countplot('marital_status', df, 'Purples', 'gender', True, 'Marital Status', 'Total Clients', 'Distribution of Total Clients per Marital Status', 0, (8,6))
+
+#Observaciones: No existe una diferencia entre ambos géneros en lo que a estado civil respecta. Lo que sí se observa es que la mayoría de clientes de la aerolínea (tanto hombres, como mujeres) están casados
 
 # %%
