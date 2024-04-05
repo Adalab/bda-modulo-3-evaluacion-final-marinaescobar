@@ -306,3 +306,29 @@ def missing_data_imputation (df):
             print(f"El método escogido para imputar los nulos de la columna {column} es: Reemplazo por la mediana ({median})")
             
     return df
+
+
+def group_by_analysis (df , column_name):
+    
+    """
+    Realiza un análisis de agrupación en un DataFrame.
+
+    Parámetros:
+    - df (DataFrame): El DataFrame que contiene los datos a analizar.
+    - column_name (str): El nombre de la columna por la cual agrupar.
+
+    Retorna:
+    - summary_df (DataFrame): Un DataFrame con estadísticas resumidas para cada grupo.
+
+    Esta función calcula estadísticas resumidas (media, desviación estándar, percentiles) 
+    para cada grupo definido por los valores en la columna especificada.
+
+    Ejemplo:
+    summary_df = group_by_analysis(data_frame, 'Categoría')
+    """
+    
+    # Crea un df con los datos agrupados por la columna escogida y muestra sus principales datos estadísticos
+    # (total, media, desviación estándar, min, percentil 25, percentil 50 o mediana, percentil 75 y máximo)
+    summary_df = df.groupby(column_name).describe()
+    
+    return summary_df

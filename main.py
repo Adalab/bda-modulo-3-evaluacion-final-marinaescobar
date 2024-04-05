@@ -65,11 +65,12 @@ fun.exploration(df)
 
 # -------------------------------------------------- Distribución de la cantidad de vuelos reservados por mes durante el año
 #%%
-flights_by_month_year = df.groupby(['year', 'month'])['total_flights'].sum().reset_index()
+flights_by_month_year = df.groupby(['year', 'month'])['flights_booked'].sum().reset_index()
 
-vis.barplot('month', 'total_flights', flights_by_month_year, 'Set3', 'year', 'Year', 'Month', 'Total flights booked', 'Distribution of Total Flights per Month', (14,6))
+vis.barplot('month', 'flights_booked', flights_by_month_year, 'Set3', 'year', 'Year', 'Month', 'Total flights booked', 'Distribution of Flights Booked per Month', (14,6))
 
 #Observaciones: Existe una mayor concentración de vuelos reservados en los meses de verano (junio, julio y agosto) para ambos años, así como un leve despunte en el mes de diciembre
+                # También se aprecia que en el año 2018 hubieron más reservas de mayo a diciembre que en las mismas fechas de 2017 
 
 # -------------------------------------------------- Relación entre la distancia del vuelo y los puntos acumulados por el cliente
 #%%
@@ -85,7 +86,7 @@ vis.countplot('province', df, 'Purples', False, False, 'Province', 'Total Client
 
 # -------------------------------------------------- Comparación del salario promedio entre los diferentes niveles educativos de los clientes
 #%%
-vis.barplot('education', 'salary', df, 'BuPu_r', False, None, 'Education Level', 'Average Salary', 'Comparison of Average Salary by Education Level', (8,6))
+vis.barplot('education', 'salary', df, 'BuPu_r', 'education', None, 'Education Level', 'Average Salary', 'Comparison of Average Salary by Education Level', (8,6))
 
 #Observaciones: Hay que tener en cuenta que los datos de College se imputaron para que pudiera tener representación en la gráfica, ya que para esta categoría no existía ningún registro de valores
                 # Sin embargo, estos datos deberán cogerse con pinzas ya que no servirían para establecer conclusiones firmes. Se necesitaría recibir los datos reales para ello
@@ -103,4 +104,22 @@ vis.countplot('marital_status', df, 'Purples', 'gender', True, 'Marital Status',
 
 #Observaciones: No existe una diferencia entre ambos géneros en lo que a estado civil respecta. Lo que sí se observa es que la mayoría de clientes de la aerolínea (tanto hombres, como mujeres) están casados
 
+# -------------------------------------------------- FASE 3: EVALUACIÓN 
+
+# -------------------------------------------------- Filtrado del conjunto de daots para incluir `flights_booked` y `education`
+#%%
+df_eval = df[['flights_booked', 'education']]
+
+# -------------------------------------------------- Análisis descriptivo
+#%%
+summary_df = fun.group_by_analysis(df_eval , 'education')
+display(summary_df)
+
+vis.boxplot('education' , 'flights_booked', df_eval, 'BuPu_r', 'education', None, 'Education level', 'Average Flights Booked', 'Test', (7,6))
+
+# Observaciones: Los diferentes niveles educativos tienen una cantidad similar de vuelos reservados, con medias cercanas a 8 vuelos
+                # Las diferencias en la desviación estándar sugieren que la cantidad de vuelos reservados varía poco en cada grupo (siendo `high school or below` los más dispersos) 
+                # Los percentiles muestran que la mayoría de los clientes reservan entre 4 y 11 vuelos
+                # No obstante, la alta homogeneidad de la muestra es algo curioso: estaría bien revisar el método de obtención de datos por si acaso
 # %%
+
