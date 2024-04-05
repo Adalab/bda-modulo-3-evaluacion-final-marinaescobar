@@ -76,13 +76,15 @@ vis.barplot('month', 'flights_booked', flights_by_month_year, 'Set3', 'year', 'Y
 #%%
 vis.scatter(df['distance'], df['points_accumulated'], 'orchid', 20, 'Flight Distance', 'Accumulated Points', 'Relationship between Flight Distance and Accumulated Points', 0.8, (8,6))
 
-#Observaciones: Existe una clara relación entre la distancia recorrida en el vuelo y el número de puntos acumulados. Esta relación, además, parece ser de tendencia positiva, pues cuando una de ambas variables aumenta, la otra también
+#Observaciones: Existe una clara relación entre la distancia recorrida en el vuelo y el número de puntos acumulados
+#               # Esta relación, además, parece ser de tendencia positiva, pues cuando una de ambas variables aumenta, la otra también
 
 # -------------------------------------------------- Distribución de los clientes por provincia o estado
 #%%
 vis.countplot('province', df, 'Purples', False, False, 'Province', 'Total Clients', 'Distribution of Total Clients per Province', 45, (8,6))
 
-#Observaciones: No existe una representación uniforme de las provincias, sino que se aprecia que la gran mayoría de clientes pertenece a Ontario, seguidos por British Columnia. Por contra, Prince Edward Island tiene la menor representación
+#Observaciones: No existe una representación uniforme de las provincias, sino que se aprecia que la gran mayoría de clientes pertenece a Ontario, 
+                # seguidos por British Columnia. Por contra, Prince Edward Island tiene la menor representación
 
 # -------------------------------------------------- Comparación del salario promedio entre los diferentes niveles educativos de los clientes
 #%%
@@ -97,12 +99,14 @@ vis.barplot('education', 'salary', df, 'BuPu_r', 'education', None, False, 'Educ
 #%%
 vis.pie(df['loyalty_card'].value_counts(), df['loyalty_card'].unique(), 15, 'white', None, 'BuPu_r', 'Percentage of clients for each Loyalty Card', 'black', 14, 0.1, (6,6))
 
-#Observaciones: La mayoría de clientes se mueven entre las tarjetas de fidelidad nova y star (con un 45,5% y 33,9% respectivamente), siendo aurora la que menor representación tiene (20,6%)
+#Observaciones: La mayoría de clientes se mueven entre las tarjetas de fidelidad nova y star (con un 45,5% y 33,9% respectivamente), 
+                # siendo aurora la que menor representación tiene (20,6%)
 
 # %%
 vis.countplot('marital_status', df, 'Purples', 'gender', True, 'Marital Status', 'Total Clients', 'Distribution of Total Clients per Marital Status', 0, (8,6))
 
-#Observaciones: No existe una diferencia entre ambos géneros en lo que a estado civil respecta. Lo que sí se observa es que la mayoría de clientes de la aerolínea (tanto hombres, como mujeres) están casados
+#Observaciones: No existe una diferencia entre ambos géneros en lo que a estado civil respecta
+                # Lo que sí se observa es que la mayoría de clientes de la aerolínea (tanto hombres, como mujeres) están casados
 
 # -------------------------------------------------- FASE 3: EVALUACIÓN 
 

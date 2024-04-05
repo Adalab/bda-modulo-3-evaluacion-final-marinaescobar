@@ -1,0 +1,14 @@
+# Tratamiento de datos
+pandas==1.3.3
+numpy==1.21.2
+scikit-learn==0.24.2
+
+# Imputación de nulos usando métodos avanzados estadísticos
+scikit-learn==0.24.2
+
+# Evaluar linealidad de las relaciones entre las variables
+scipy==1.7.1
+
+# Visualización
+matplotlib==3.4.3
+seaborn==0.11.2
