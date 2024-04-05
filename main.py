@@ -93,13 +93,14 @@ vis.barplot('education', 'salary', df, 'BuPu_r', 'education', None, False, 'Educ
 #Observaciones: Hay que tener en cuenta que los datos de College se imputaron para que pudiera tener representación en la gráfica, ya que para esta categoría no existía ningún registro de valores
                 # Sin embargo, estos datos deberán cogerse con pinzas ya que no servirían para establecer conclusiones firmes. Se necesitaría recibir los datos reales para ello
                 # Teniendo esto en cuenta, se aprecia que cuanto mayor es el nivel educativo, mayor promedio salarial
-                # Especial mención al grado de doctorado, cuyo promedio es muy superior al resto
+                # También cabe destacar que la dispersión estándar de la columna `salary` es bastante elevada, lo cual indica la presencia de valores atípicos que 
+                # en un futuro análisis se podrían estudiar aparte y con mayor nivel de detalle
 
 # -------------------------------------------------- Proporción de clientes con diferentes tipos de tarjetas de fidelidad
 #%%
-vis.pie(df['loyalty_card'].value_counts(), df['loyalty_card'].unique(), 15, 'white', None, 'BuPu_r', 'Percentage of clients for each Loyalty Card', 'black', 14, 0.1, (6,6))
+vis.pie(df['loyalty_card'].value_counts(), df['loyalty_card'].value_counts().index, 15, 'white', None, 'BuPu_r', 'Percentage of clients for each Loyalty Card', 'black', 14, 0.05, (6,6))
 
-#Observaciones: La mayoría de clientes se mueven entre las tarjetas de fidelidad nova y star (con un 45,5% y 33,9% respectivamente), 
+#Observaciones: La mayoría de clientes se mueven entre las tarjetas de fidelidad star y nova (con un 45,5% y 33,9% respectivamente), 
                 # siendo aurora la que menor representación tiene (20,6%)
 
 # -------------------------------------------------- Distribución de los clientes según su estado civil y su género
@@ -130,12 +131,12 @@ vis.boxplot('education' , 'flights_booked', df_eval, 'BuPu_r', 'education', None
 # -------------------------------------------------- Prueba estadística
 #%%
 # Revisión de normalidad de los datos
-fun.normality(df_eval, 'flights_booked')
-#Observaciones: La columna `flights_booked` no sigue una distribución normal 
-                
+fun.normality_kolmogorov(df_eval, 'education', 'flights_booked')
+#Observaciones: La columna `flights_booked` no sigue una distribución normal en ninguno de los grupos de 'education'
+print("-----------------------------------------------------------")
 # Revisión de homogeneidad de los datos
 fun.homogeneity_of_variances(df_eval, 'education', 'flights_booked')
-#Observaciones: La columna `flights_booked` sigue una distribución homogénea
+#Observaciones: La columna `flights_booked` sigue una distribución homogénea para los grupos de 'education'
 
 #%%
 # Hipótesis general:

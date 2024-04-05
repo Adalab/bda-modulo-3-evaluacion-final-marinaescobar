@@ -31,6 +31,7 @@
 - En general las medias y medianas de las columnas numéricas no difieren demasiado, a excepción de las columnas `CLV` y `salary`
     - Info acerca del término 'CLV' o 'Customer Life Value': Podría entenderse como el valor neto que un cliente genera para la empresa a lo largo de toda su vida como cliente de la aerolínea
     - Puede que esto se deba a los negativos de `salary`, revisar de nuevo una vez que se hayan convertido a positivos
+    - Una vez convertidos a positivo e imputado los nulos, la media y mediana se acercan bastante. Sin embargo, la desviación estándar elevada sugiere que existe una considerable cantidad de valores atípicos
 
 ### Observaciones generales
 

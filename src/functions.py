@@ -341,7 +341,7 @@ def group_by_analysis (df , column_name):
     return summary_df
 
 
-def normality_kolmogorov(df, column_data_name):
+def normality_kolmogorov(df, column_group_name, column_data_name):
     """
     Evalúa la normalidad de una columna de datos de un DataFrame utilizando la prueba de Kolmogorov-Smirnov (KS).
 
@@ -352,13 +352,18 @@ def normality_kolmogorov(df, column_data_name):
     Retorna:
         None: Imprime un mensaje indicando si los datos siguen o no una distribución normal.
     """
-    p_value = kstest(df[column_data_name], 'norm').pvalue
-
-    print(f'Valor P: {p_value:.4f}')
-    if p_value > 0.05:
-        print(f"--Para la columna {column_data_name}, los datos siguen una distribución normal")
-    else:
-        print(f"--Para la columna {column_data_name}, los datos no siguen una distribución normal")
+    for group_value in df[column_group_name].unique():
+        
+        group_data = df[df[column_group_name] == group_value][column_data_name]
+        p_value = kstest(group_data, 'norm').pvalue
+        
+        print(f'Grupo {group_value}:')
+        print(f'Valor P: {p_value:.4f}')
+        
+        if p_value > 0.05:
+            print(f"--Los datos siguen una distribución normal para la columna {column_data_name}\n")
+        else:
+            print(f"--Los datos no siguen una distribución normal para la columna {column_data_name}\n")
          
     
 def homogeneity_of_variances (df, column_group_name, column_data_name):
@@ -478,6 +483,6 @@ def kruskal_wallis_test(df, column_group_name, column_data_name):
     if p_value < alpha:
         print(f"Se rechaza la hipótesis nula (H0).\nCon un p_value de {round(p_value,2)} hay una diferencia significativa entre los diferentes grupos")
     else:
-        print(f"No se puede rechazar la hipótesis nula (H0).\nCon un p_value de {round(p_value,2)} no hay suficiente evidencia para afirmar que existe una diferencias significativa entre los distintos grupos")
+        print(f"No se puede rechazar la hipótesis nula (H0).\nCon un p_value de {round(p_value,2)} no hay suficiente evidencia para afirmar que existe una diferencia significativa entre los distintos grupos")
     
     return p_value
