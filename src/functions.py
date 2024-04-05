@@ -392,9 +392,9 @@ def homogeneity_of_variances (df, column_group_name, column_data_name):
     
     print(f'Valor P: {p_value:.4f}')
     if p_value > 0.05:
-        print(f"--Para la métrica {column_data_name} las varianzas son homogéneas entre grupos")
+        print(f"--Para la métrica {column_data_name} las varianzas son homogéneas entre los grupos")
     else:
-        print(f"--Para la métrica {column_data_name}, las varianzas no son homogéneas entre grupos")
+        print(f"--Para la métrica {column_data_name}, las varianzas no son homogéneas entre los grupos")
 
 
 def anova_test (df , column_group_name, column_data_name):
