@@ -94,7 +94,7 @@ vis.barplot('education', 'salary', df, 'BuPu_r', 'education', None, False, 'Educ
                 # Sin embargo, estos datos deberán cogerse con pinzas ya que no servirían para establecer conclusiones firmes. Se necesitaría recibir los datos reales para ello
                 # Teniendo esto en cuenta, se aprecia que cuanto mayor es el nivel educativo, mayor promedio salarial
                 # También cabe destacar que la dispersión estándar de la columna `salary` es bastante elevada, lo cual indica la presencia de valores atípicos que 
-                # en un futuro análisis se podrían estudiar aparte y con mayor nivel de detalle
+                # en un futuro análisis se podrían estudiar aparte y con mayor nivel de detalle (dada la eleavada diferencia de salario en los doctorado respecto al resto de niveles educativos, es posible que en esa categoría se condensen los outliers)
 
 # -------------------------------------------------- Proporción de clientes con diferentes tipos de tarjetas de fidelidad
 #%%
