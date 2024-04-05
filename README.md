@@ -30,8 +30,8 @@ El archivo main.py contiene el código principal que realiza el análisis de los
 ![Seaborn](https://img.shields.io/badge/Seaborn-%2346A4CC?style=flat&logo=seaborn&logoColor=white)
 
 ## Instalación y ejecución del código
-- Clona el repositorio: git clone https://github.com/Adalab/bda-modulo-3-evaluacion-final-marinaescobar
-- Asegúrate de tener instaladas las bibliotecas necesarias especificadas en el archivo [requirements.txt](https://github.com/Adalab/bda-modulo-3-evaluacion-final-marinaescobar/blob/main/requirements.txt). En el caso de que te falten, puedes instalarlas ejecutando `pip install -r requirements.txt` en tu terminal
+- Clona el repositorio: `git clone https://github.com/Adalab/bda-modulo-3-evaluacion-final-marinaescobar`
+- Asegúrate de tener instaladas las bibliotecas especificadas en el archivo [requirements.txt](https://github.com/Adalab/bda-modulo-3-evaluacion-final-marinaescobar/blob/main/requirements.txt). En el caso de que te falten, puedes instalarlas ejecutando `pip install -r requirements.txt` en tu terminal
 - Ejecuta el archivo [main.py](https://github.com/Adalab/bda-modulo-3-evaluacion-final-marinaescobar/blob/main/main.py) desde VS Code o tu programa de editor de código de preferencia
 
 ## Autora
