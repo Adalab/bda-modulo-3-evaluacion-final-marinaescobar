@@ -81,7 +81,7 @@ vis.scatter(df['distance'], df['points_accumulated'], 'orchid', 20, 'Flight Dist
 
 # -------------------------------------------------- Distribución de los clientes por provincia o estado
 #%%
-vis.countplot('province', df, 'Purples', False, False, 'Province', 'Total Clients', 'Distribution of Total Clients per Province', 45, (8,6))
+vis.countplot('province', df, 'Purples', False, None, False, 'Province', 'Total Clients', 'Distribution of Total Clients per Province', 45, (8,6))
 
 #Observaciones: No existe una representación uniforme de las provincias, sino que se aprecia que la gran mayoría de clientes pertenece a Ontario, 
                 # seguidos por British Columnia. Por contra, Prince Edward Island tiene la menor representación
@@ -104,7 +104,7 @@ vis.pie(df['loyalty_card'].value_counts(), df['loyalty_card'].unique(), 15, 'whi
 
 # -------------------------------------------------- Distribución de los clientes según su estado civil y su género
 # %%
-vis.countplot('marital_status', df, 'Purples', 'gender', True, 'Marital Status', 'Total Clients', 'Distribution of Total Clients per Marital Status', 0, (8,6))
+vis.countplot('marital_status', df, 'Purples', 'gender', True, True, 'Marital Status', 'Total Clients', 'Distribution of Total Clients per Marital Status', 0, (8,6))
 
 #Observaciones: No existe una diferencia entre ambos géneros en lo que a estado civil respecta
                 # Lo que sí se observa es que la mayoría de clientes de la aerolínea (tanto hombres, como mujeres) están casados
@@ -129,14 +129,23 @@ vis.boxplot('education' , 'flights_booked', df_eval, 'BuPu_r', 'education', None
 
 # -------------------------------------------------- Prueba estadística
 #%%
-# Hipótesis:
+# Revisión de normalidad de los datos
+fun.normality(df_eval, 'flights_booked')
+#Observaciones: La columna `flights_booked` no sigue una distribución normal 
+                
+# Revisión de homogeneidad de los datos
+fun.homogeneity_of_variances(df_eval, 'education', 'flights_booked')
+#Observaciones: La columna `flights_booked` sigue una distribución homogénea
+
+#%%
+# Hipótesis general:
 # ----- Hipótesis nula (H0): No hay diferencia significativa en el número de vuelos reservados entre los diferentes niveles educativos
-# ----- Hipótesis alternativa (H0): Existe al menos una diferencia significativa en el número de vuelos reservados entre los diferentes niveles educativos
+# ----- Hipótesis alternativa (H1): Existe al menos una diferencia significativa en el número de vuelos reservados entre los diferentes niveles educativos
 
-# Método de análisis escogido: ANOVA
-# ----- La razón principal para utilizar este método es que tenemos más de dos grupos y ANOVA permite comparar las medias de tres o más grupos independientes
-p_value = fun.anova_test(df_eval, 'education', 'flights_booked')
+# Método de análisis escogido: Test de Kruskal-Wallis
+# ----- La razón principal para utilizar este método no paramétrico es porque la muestra de datos no cumple con el criterio de normalidad
+        # También porque permite comparar las medianas de tres o más grupos independientes
+p_value = fun.kruskal_wallis_test(df_eval, 'education', 'flights_booked')
 
-#Observaciones: Dado que el p_value obtenido en el test es de 0.59, no se puede descartar la hipótesis nula (h0)
+#Observaciones: Dado que el p_value obtenido en el test es de 0.68, no se puede descartar la hipótesis nula (h0)
                 # Por tanto, no existe diferencia significativa en el número de vuelos reservados entre los diferentes niveles educativos
-

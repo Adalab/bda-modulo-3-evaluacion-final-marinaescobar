@@ -12,7 +12,11 @@ from sklearn.impute import KNNImputer
 
 # Evaluar linealidad de las relaciones entre las variables
 import scipy.stats as stats
+from scipy.stats import kstest
+from scipy.stats import levene
 from scipy.stats import f_oneway
+from scipy.stats import kruskal
+
 
 
 def open_file (ruta):
@@ -337,6 +341,57 @@ def group_by_analysis (df , column_name):
     return summary_df
 
 
+def normality_kolmogorov(df, column_data_name):
+    """
+    Evalúa la normalidad de una columna de datos de un DataFrame utilizando la prueba de Kolmogorov-Smirnov (KS).
+
+    Parámetros:
+        df (DataFrame): El DataFrame que contiene los datos.
+        column_data_name (str): El nombre de la columna en el DataFrame que se va a evaluar para la normalidad.
+
+    Retorna:
+        None: Imprime un mensaje indicando si los datos siguen o no una distribución normal.
+    """
+    p_value = kstest(df[column_data_name], 'norm').pvalue
+
+    print(f'Valor P: {p_value:.4f}')
+    if p_value > 0.05:
+        print(f"--Para la columna {column_data_name}, los datos siguen una distribución normal")
+    else:
+        print(f"--Para la columna {column_data_name}, los datos no siguen una distribución normal")
+         
+    
+def homogeneity_of_variances (df, column_group_name, column_data_name):
+    
+    """
+    Evalúa la homogeneidad de las varianzas entre grupos para una métrica específica en un DataFrame dado.
+
+    Parámetros:
+    - dataframe (DataFrame): El DataFrame que contiene los datos.
+    - columna (str): El nombre de la columna que se utilizará para dividir los datos en grupos.
+    - columna_metrica (str): El nombre de la columna que se utilizará para evaluar la homogeneidad de las varianzas.
+
+    Returns:
+    No devuelve nada directamente, pero imprime en la consola si las varianzas son homogéneas o no entre los grupos.
+    Se utiliza la prueba de Levene para evaluar la homogeneidad de las varianzas. Si el valor p resultante es mayor que 0.05,
+    se concluye que las varianzas son homogéneas; de lo contrario, se concluye que las varianzas no son homogéneas.
+    """
+    
+    eval_values = []
+    
+    for value in df[column_group_name].unique():
+        
+        eval_values.append(df[df[column_group_name]== value][column_data_name])
+
+    statistic, p_value = stats.levene(*eval_values)
+    
+    print(f'Valor P: {p_value:.4f}')
+    if p_value > 0.05:
+        print(f"--Para la métrica {column_data_name} las varianzas son homogéneas entre grupos")
+    else:
+        print(f"--Para la métrica {column_data_name}, las varianzas no son homogéneas entre grupos")
+
+
 def anova_test (df , column_group_name, column_data_name):
     
     """
@@ -379,6 +434,50 @@ def anova_test (df , column_group_name, column_data_name):
     if p_value < alpha:
         print(f"Se rechaza la hipótesis nula (H0).\nCon un p_value de {round(p_value,2)} hay una diferencia significativa entre los diferentes grupos")
     else:
-        print(f"No se puede rechazar la hipótesis nula (H0).\nCon un p_value de {round(p_value,2)} no hay suficiente evidencia para afirmar que existe una diferencias significativas entre los distintos grupos")
+        print(f"No se puede rechazar la hipótesis nula (H0).\nCon un p_value de {round(p_value,2)} no hay suficiente evidencia para afirmar que existe una diferencias significativa entre los distintos grupos")
+    
+    return p_value
+
+
+def kruskal_wallis_test(df, column_group_name, column_data_name):
+    """
+    Realiza un test de Kruskal-Wallis para determinar si hay diferencias significativas
+    entre los grupos definidos por una columna categórica en un DataFrame.
+
+    Parámetros:
+    - df (DataFrame): El DataFrame que contiene los datos a analizar.
+    - column_group_name (str): El nombre de la columna que define los grupos.
+    - column_data_name (str): El nombre de la columna que contiene los datos a comparar.
+
+    Retorna:
+    - h_statistic (float): El valor de la estadística H del test de Kruskal-Wallis.
+    - p_value (float): El valor p resultante del test de Kruskal-Wallis.
+
+    Esta función realiza un test de Kruskal-Wallis para determinar si hay diferencias
+    significativas entre los grupos definidos por una columna categórica en un DataFrame.
+    Calcula la estadística H y el valor p del test de Kruskal-Wallis y los retorna.
+
+    Ejemplo de uso:
+    h_stat, p_val = kruskal_wallis_test(df_eval, 'education', 'flights_booked')
+    """
+    # Extrae cada uno de los grupos usando column_name de referencia
+    groups = df[column_group_name].unique()
+    group_data = []
+    
+    # Obtiene los datos para cada grupo y los almacena en la lista group_data
+    for group in groups:
+        # Selecciona solo las filas donde el valor en la columna column_group_name coincide con el nombre del grupo actual
+        # Y añade sólo los datos de la columna column_data_name
+        group_data.append(df[df[column_group_name] == group][column_data_name])
+        
+    # Realiza el test de Kruskal-Wallis
+    h_statistic, p_value = kruskal(*group_data)
+    
+    # Interpreta los resultados
+    alpha = 0.05
+    if p_value < alpha:
+        print(f"Se rechaza la hipótesis nula (H0).\nCon un p_value de {round(p_value,2)} hay una diferencia significativa entre los diferentes grupos")
+    else:
+        print(f"No se puede rechazar la hipótesis nula (H0).\nCon un p_value de {round(p_value,2)} no hay suficiente evidencia para afirmar que existe una diferencias significativa entre los distintos grupos")
     
     return p_value

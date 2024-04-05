@@ -25,7 +25,6 @@ El archivo main.py contiene el código principal que realiza el análisis de los
 ![IterativeImputer](https://img.shields.io/badge/IterativeImputer-%234AB27B?style=flat)
 ![KNNImputer](https://img.shields.io/badge/KNNImputer-%234AB27B?style=flat)
 ![Scipy](https://img.shields.io/badge/Scipy-%230C55A5?style=flat)
-![f_oneway](https://img.shields.io/badge/f_oneway-%230C55A5?style=flat)
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-%23588998?style=flat&logo=matplotlib)
 ![Seaborn](https://img.shields.io/badge/Seaborn-%2346A4CC?style=flat&logo=seaborn&logoColor=white)
 
