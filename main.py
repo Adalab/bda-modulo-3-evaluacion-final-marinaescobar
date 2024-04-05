@@ -102,6 +102,7 @@ vis.pie(df['loyalty_card'].value_counts(), df['loyalty_card'].unique(), 15, 'whi
 #Observaciones: La mayoría de clientes se mueven entre las tarjetas de fidelidad nova y star (con un 45,5% y 33,9% respectivamente), 
                 # siendo aurora la que menor representación tiene (20,6%)
 
+# -------------------------------------------------- Distribución de los clientes según su estado civil y su género
 # %%
 vis.countplot('marital_status', df, 'Purples', 'gender', True, 'Marital Status', 'Total Clients', 'Distribution of Total Clients per Marital Status', 0, (8,6))
 
