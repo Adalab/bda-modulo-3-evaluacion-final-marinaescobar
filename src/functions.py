@@ -11,6 +11,10 @@ from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
 from sklearn.impute import KNNImputer
 
+# Evaluar linealidad de las relaciones entre las variables
+import scipy.stats as stats
+from scipy.stats import f_oneway
+
 
 def open_file (ruta):
     
@@ -332,3 +336,50 @@ def group_by_analysis (df , column_name):
     summary_df = df.groupby(column_name).describe()
     
     return summary_df
+
+
+def anova_test (df , column_group_name, column_data_name):
+    
+    """
+    Realiza un test de ANOVA para determinar si hay diferencias significativas
+    entre los grupos definidos por una columna categórica en un DataFrame.
+
+    Parámetros:
+    - df (DataFrame): El DataFrame que contiene los datos a analizar.
+    - column_group_name (str): El nombre de la columna que define los grupos.
+    - column_data_name (str): El nombre de la columna que contiene los datos a comparar.
+
+    Retorna:
+    - f_statistic (float): El valor de la estadística F del test de ANOVA.
+    - p_value (float): El valor p resultante del test de ANOVA.
+
+    Esta función realiza un test de ANOVA para determinar si hay diferencias
+    significativas entre los grupos definidos por una columna categórica en un DataFrame.
+    Calcula la estadística F y el valor p del test de ANOVA y los retorna.
+
+    Ejemplo de uso:
+    f_stat, p_val = anova_test(df_eval, 'education', 'flights_booked')
+    """
+    
+    # Extrae cada uno de los grupos usando column_name de referencia
+    groups = df[column_group_name].unique()
+    group_data = []
+    
+    # Obtiene los datos para cada grupo y los almacena en la lista group_data
+    for group in groups:
+        
+        # Selecciona solo las filas donde el valor en la columna column_group_name coincide con el nombre del grupo actual
+        # Y añade sólo los datos de la columna column_data_name
+        group_data.append(df[df[column_group_name] == group][column_data_name])
+        
+    # Realiza el test de ANOVA (el * se utiliza para desempaquetar la secuencia de datos de la lista group_data)
+    f_statistic, p_value = f_oneway(*group_data)
+    
+    # Interpreta los resultados
+    alpha = 0.05
+    if p_value < alpha:
+        print(f"Se rechaza la hipótesis nula (H0).\nCon un p_value de {round(p_value,2)} hay una diferencia significativa entre los diferentes grupos")
+    else:
+        print(f"No se puede rechazar la hipótesis nula (H0).\nCon un p_value de {round(p_value,2)} no hay suficiente evidencia para afirmar que existe una diferencias significativas entre los distintos grupos")
+    
+    return p_value

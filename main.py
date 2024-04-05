@@ -67,7 +67,7 @@ fun.exploration(df)
 #%%
 flights_by_month_year = df.groupby(['year', 'month'])['flights_booked'].sum().reset_index()
 
-vis.barplot('month', 'flights_booked', flights_by_month_year, 'Set3', 'year', 'Year', 'Month', 'Total flights booked', 'Distribution of Flights Booked per Month', (14,6))
+vis.barplot('month', 'flights_booked', flights_by_month_year, 'Set3', 'year', 'Year', True, 'Month', 'Total flights booked', 'Distribution of Flights Booked per Month', (14,6))
 
 #Observaciones: Existe una mayor concentración de vuelos reservados en los meses de verano (junio, julio y agosto) para ambos años, así como un leve despunte en el mes de diciembre
                 # También se aprecia que en el año 2018 hubieron más reservas de mayo a diciembre que en las mismas fechas de 2017 
@@ -86,7 +86,7 @@ vis.countplot('province', df, 'Purples', False, False, 'Province', 'Total Client
 
 # -------------------------------------------------- Comparación del salario promedio entre los diferentes niveles educativos de los clientes
 #%%
-vis.barplot('education', 'salary', df, 'BuPu_r', 'education', None, 'Education Level', 'Average Salary', 'Comparison of Average Salary by Education Level', (8,6))
+vis.barplot('education', 'salary', df, 'BuPu_r', 'education', None, False, 'Education Level', 'Average Salary', 'Comparison of Average Salary by Education Level', (8,6))
 
 #Observaciones: Hay que tener en cuenta que los datos de College se imputaron para que pudiera tener representación en la gráfica, ya que para esta categoría no existía ningún registro de valores
                 # Sin embargo, estos datos deberán cogerse con pinzas ya que no servirían para establecer conclusiones firmes. Se necesitaría recibir los datos reales para ello
@@ -115,11 +115,23 @@ df_eval = df[['flights_booked', 'education']]
 summary_df = fun.group_by_analysis(df_eval , 'education')
 display(summary_df)
 
-vis.boxplot('education' , 'flights_booked', df_eval, 'BuPu_r', 'education', None, 'Education level', 'Average Flights Booked', 'Test', (7,6))
+vis.boxplot('education' , 'flights_booked', df_eval, 'BuPu_r', 'education', None, False, 'Education level', 'Average Flights Booked', 'Distribution of Avg. Flights Booked per Education Level', (7,6))
 
 # Observaciones: Los diferentes niveles educativos tienen una cantidad similar de vuelos reservados, con medias cercanas a 8 vuelos
                 # Las diferencias en la desviación estándar sugieren que la cantidad de vuelos reservados varía poco en cada grupo (siendo `high school or below` los más dispersos) 
                 # Los percentiles muestran que la mayoría de los clientes reservan entre 4 y 11 vuelos
                 # No obstante, la alta homogeneidad de la muestra es algo curioso: estaría bien revisar el método de obtención de datos por si acaso
-# %%
+
+# -------------------------------------------------- Prueba estadística
+#%%
+# Hipótesis:
+# ----- Hipótesis nula (H0): No hay diferencia significativa en el número de vuelos reservados entre los diferentes niveles educativos
+# ----- Hipótesis alternativa (H0): Existe al menos una diferencia significativa en el número de vuelos reservados entre los diferentes niveles educativos
+
+# Método de análisis escogido: ANOVA
+# ----- La razón principal para utilizar este método es que tenemos más de dos grupos y ANOVA permite comparar las medias de tres o más grupos independientes
+p_value = fun.anova_test(df_eval, 'education', 'flights_booked')
+
+#Observaciones: Dado que el p_value obtenido en el test es de 0.59, no se puede descartar la hipótesis nula (h0)
+                # Por tanto, no existe diferencia significativa en el número de vuelos reservados entre los diferentes niveles educativos
 
